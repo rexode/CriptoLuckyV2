@@ -12,9 +12,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Switch
+  Switch,
 } from "@mui/material";
-import { styled,createTheme ,CssBaseline} from "@mui/material";
+import { styled, createTheme, CssBaseline } from "@mui/material";
 import {
   Celebration,
   Twitter,
@@ -22,7 +22,7 @@ import {
   LocalActivity,
   Menu,
   AcUnit,
-  AirlineSeatFlat, 
+  AirlineSeatFlat,
 } from "@mui/icons-material";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
@@ -34,37 +34,40 @@ import App from "../App";
 import { Link } from "react-scroll";
 import { red } from "@mui/material/colors";
 import { ThemeProvider } from "styled-components";
-import {themeDark,themeLight} from "./Themes"
+import { themeDark, themeLight } from "./Themes";
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
   background: "rgba(0,0,0,0.0)",
 });
 
-
-
 export default function Navbar(props) {
-  const { initConnection, account,handleMode ,DarkMode,provider,nTokens} = props;
-  let nTokensFixed= nTokens==null?(0):((nTokens/10**18).toFixed(2).toString())
+  const { initConnection, account, handleMode, DarkMode, provider, nTokens } =
+    props;
+  let nTokensFixed =
+    nTokens == null ? 0 : (nTokens / 10 ** 18).toFixed(2).toString();
   const DrawerComponent = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     return (
-      <ThemeProvider theme={DarkMode? themeLight:themeDark}>
-      <CssBaseline />      
-      <Drawer
+      <ThemeProvider theme={DarkMode ? themeLight : themeDark}>
+        <CssBaseline />
+        <Drawer
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
-          PaperProps={{
-            
-          }}
+          PaperProps={{}}
         >
-          <Typography sx={{marginLeft:5}}>DarkMode<Switch onChange={handleMode} color="primary"/></Typography>
-          
-          {nTokens==null?(
-                  <Typography fontSize={16}>Log-in first</Typography>
-                ):(
-                  <Typography fontSize={16} sx={{marginRight:5}}>{nTokensFixed} $CLT</Typography>
-                )}
+          <Typography sx={{ marginLeft: 5 }}>
+            DarkMode
+            <Switch onChange={handleMode} color="primary" />
+          </Typography>
+
+          {nTokens == null ? (
+            <Typography fontSize={16}>Log-in first</Typography>
+          ) : (
+            <Typography fontSize={16} sx={{ marginRight: 5 }}>
+              {nTokensFixed} $CLT
+            </Typography>
+          )}
           <List>
             {["Twitter", "Whitepaper", "Lottery"].map((text, index) => (
               <ListItem key={text} disablePadding>
@@ -89,9 +92,8 @@ export default function Navbar(props) {
                             href="https://twitter.com/criptoluckyreal"
                             sx={{ color: "white", m: 3 }}
                           >
-                        <Attachment />
+                            <Attachment />
                             <Typography sx={{ minWidth: 100 }}>
-                              
                               Whitepaper
                             </Typography>{" "}
                           </Button>
@@ -101,15 +103,17 @@ export default function Navbar(props) {
                             href="https://twitter.com/criptoluckyreal"
                             sx={{ color: "white", m: 3 }}
                           >
-                        <Celebration/>
-                        <Link
-                    activeClass="active"
-                    to="lottery"
-                    spy={true}
-                    smooth={true}
-                  >
-                    <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
-                  </Link>
+                            <Celebration />
+                            <Link
+                              activeClass="active"
+                              to="lottery"
+                              spy={true}
+                              smooth={true}
+                            >
+                              <Typography sx={{ minWidth: 100 }}>
+                                To Lottery
+                              </Typography>
+                            </Link>
                           </Button>
                         )}
                       </>
@@ -132,8 +136,8 @@ export default function Navbar(props) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <ThemeProvider theme={DarkMode? themeLight:themeDark}>
-      <CssBaseline />  
+    <ThemeProvider theme={DarkMode ? themeLight : themeDark}>
+      <CssBaseline />
       {isMobile ? (
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
@@ -149,7 +153,6 @@ export default function Navbar(props) {
               </Box>
 
               {account == null ? (
-                
                 <Button
                   disableElevation
                   sx={{ color: "white" }}
@@ -179,9 +182,8 @@ export default function Navbar(props) {
                   component="div"
                   sx={{ marginRight: 4 }}
                 >
-                  CryptoLucky
+                  CriptoLucky
                 </Typography>
-                
               </Box>
               <Box
                 sx={{
@@ -214,29 +216,29 @@ export default function Navbar(props) {
                     <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
                   </Link>
                 </Button>
-                
               </Box>
-              <Switch onChange={handleMode} color="primary"/>
+              <Switch onChange={handleMode} color="primary" />
               {account == null ? (
                 <Button
                   disableElevation
                   sx={{ color: "white" }}
                   onClick={initConnection}
-
                 >
                   <Typography fontSize={16}>Log-in</Typography>
                 </Button>
               ) : (
                 <>
-                {nTokens==null?(
-                  <Typography fontSize={16}>Log-in first</Typography>
-                ):(
-                  <Typography fontSize={16} sx={{marginRight:5}}>{nTokensFixed} $CLT</Typography>
-                )}
-                
-                <Typography>
-                  ...{account.substring(account.length - 7)}
-                </Typography>
+                  {nTokens == null ? (
+                    <Typography fontSize={16}>Log-in first</Typography>
+                  ) : (
+                    <Typography fontSize={16} sx={{ marginRight: 5 }}>
+                      {nTokensFixed} $CLT
+                    </Typography>
+                  )}
+
+                  <Typography>
+                    ...{account.substring(account.length - 7)}
+                  </Typography>
                 </>
               )}
             </Toolbar>
