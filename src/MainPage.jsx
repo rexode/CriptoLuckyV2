@@ -20,7 +20,7 @@ import Lottery from "./components/Lottery";
 import Results from "./components/Results";
 import Footer from "./components/Footer";
 import { ethers } from "ethers";
-import imageBackground from "./assets/fondoEntero.png";
+import imageBackground from "./assets/Background.png";
 import { themeDark, themeLight } from "./components/Themes";
 import abi from "./abi/abiToken.json";
 import { Outlet, Link } from "react-router-dom";
@@ -77,10 +77,13 @@ export default function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={DarkMode ? themeLight : themeDark}>
-      <CssBaseline />
-      <Box className="App">
+
+      <Box
+        className="App"
+        style={{ backgroundImage: `url(${imageBackground})` }}
+      >
         <Navbar
+        
           initConnection={initConnection}
           account={account}
           handleMode={handleMode}
@@ -98,6 +101,5 @@ export default function App() {
         <Results account={account} provider={provider} DarkMode={DarkMode} />
         <Footer DarkMode={DarkMode} />
       </Box>
-    </ThemeProvider>
   );
 }

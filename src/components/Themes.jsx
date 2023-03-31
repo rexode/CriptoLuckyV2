@@ -5,43 +5,34 @@ import React from "react";
 import { styled } from "@mui/material";
 
     export const themeDark = createTheme({
-        palette: {
-            primary: {
-              main: "#FFFFFF",
-            },
-            secondary: {
-              main: "#D0F688",
-            },
-          },
-        components: {
-          MuiCssBaseline: {
-            styleOverrides: {
-              body: {
-                backgroundImage: `linear-gradient(180deg, #00063C 0%, #0013BC 32.29%, #2A01A0 73.96%, #CC00FF 100%)`,
-              },
-            },
-          },
-          MuiButton: {
-            styleOverrides: {
-              // Name of the slot
-              root: {
-                color: "#f5efff",
-                background: "linear-gradient(149.45deg, #7400b8 0%, #5e60ce 50%, #4ea8de 73%, #64dfdf  100%)",
-                borderRadius: 50,
-                border: "3px solid",
-              },
-            },
-          },
-          MuiDrawer: {
-            styleOverrides: {
-              paper: {
-                color: "#f5efff",
-                backgroundImage: `linear-gradient(180deg, #00063C 0%, #0013BC 32.29%, #2A01A0 73.96%, #CC00FF 100%)`
-              }
-            }
-          }
+      palette: {
+        primary: {
+          main: "#FFFFFF",
         },
-      })
+        secondary: {
+          main: "#D0F688",
+        },
+      },
+      components: {
+        MuiCssBaseline: {
+          styleOverrides: {
+            body: {
+              backgroundImage: `linear-gradient(180deg, #00063C 0%, #0013BC 32.29%, #2A01A0 73.96%, #CC00FF 100%)`,
+            },
+          },
+        },
+        
+        
+        MuiDrawer: {
+          styleOverrides: {
+            paper: {
+              color: "#f5efff",
+              backgroundImage: `linear-gradient(180deg, #00063C 0%, #0013BC 32.29%, #2A01A0 73.96%, #CC00FF 100%)`,
+            },
+          },
+        },
+      },
+    });
       
       export const themeLight=createTheme({
         palette: {

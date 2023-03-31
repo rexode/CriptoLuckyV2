@@ -1,0 +1,194 @@
+[
+  {
+    "inputs": [
+      { "internalType": "uint64", "name": "subscriptionId", "type": "uint64" },
+      { "internalType": "address", "name": "_tokenReward", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "have", "type": "address" },
+      { "internalType": "address", "name": "want", "type": "address" }
+    ],
+    "name": "OnlyCoordinatorCanFulfill",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "EmgWithdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "PastLotteries",
+    "outputs": [
+      { "internalType": "uint256", "name": "prize", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "percentageWithdrawal",
+        "type": "uint256"
+      },
+      { "internalType": "uint256", "name": "Nwinners", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "PercentageWinners",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_ActualLottery",
+    "outputs": [
+      { "internalType": "uint256", "name": "idGame", "type": "uint256" },
+      { "internalType": "uint256", "name": "prize", "type": "uint256" },
+      { "internalType": "uint256", "name": "pool", "type": "uint256" },
+      { "internalType": "uint256", "name": "costTicket", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "maxTicketsPlayer",
+        "type": "uint256"
+      },
+      { "internalType": "bool", "name": "active", "type": "bool" },
+      { "internalType": "uint256", "name": "totalTickets", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxTickets", "type": "uint256" },
+      { "internalType": "uint32", "name": "Nwinners", "type": "uint32" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "aeth",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_cost", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "_maxTicketsPlayer",
+        "type": "uint256"
+      },
+      { "internalType": "uint32", "name": "_Nwinners", "type": "uint32" },
+      { "internalType": "uint256", "name": "_maxTickets", "type": "uint256" },
+      { "internalType": "uint256", "name": "_percentage", "type": "uint256" }
+    ],
+    "name": "createLottery",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "endGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "tickets", "type": "uint256" }
+    ],
+    "name": "join",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "prueba_randomWords",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "requestId", "type": "uint256" },
+      {
+        "internalType": "uint256[]",
+        "name": "randomWords",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "rawFulfillRandomWords",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "s_randomWords",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "s_requestId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint32", "name": "gas", "type": "uint32" }],
+    "name": "setGaslimit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_Nwinners", "type": "uint256" },
+      { "internalType": "uint256", "name": "_place", "type": "uint256" },
+      { "internalType": "uint256", "name": "_percentage", "type": "uint256" }
+    ],
+    "name": "setPercentageWinners",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "setWinners",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_idGame", "type": "uint256" }
+    ],
+    "name": "withdrawByWinner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawal",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

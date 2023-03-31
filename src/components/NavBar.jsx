@@ -15,6 +15,8 @@ import {
   Switch,
 } from "@mui/material";
 import { styled, createTheme, CssBaseline } from "@mui/material";
+import imageButton from "../assets/metamask.png";
+
 import {
   Celebration,
   Twitter,
@@ -50,8 +52,7 @@ export default function Navbar(props) {
   const DrawerComponent = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     return (
-      <ThemeProvider theme={DarkMode ? themeLight : themeDark}>
-        <CssBaseline />
+      <>
         <Drawer
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
@@ -128,7 +129,7 @@ export default function Navbar(props) {
         <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
           <Menu sx={{ color: "white" }} />
         </IconButton>
-      </ThemeProvider>
+      </>
     );
   };
 
@@ -137,8 +138,7 @@ export default function Navbar(props) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <ThemeProvider theme={DarkMode ? themeLight : themeDark}>
-      <CssBaseline />
+    <>
       {isMobile ? (
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
@@ -155,8 +155,7 @@ export default function Navbar(props) {
 
               {account == null ? (
                 <Button
-                  disableElevation
-                  sx={{ color: "white" }}
+                  sx={{ color: "orange", marginLeft: 4, border: 3 }}
                   onClick={initConnection}
                 >
                   <Typography fontSize={16}>Log-in</Typography>
@@ -172,7 +171,11 @@ export default function Navbar(props) {
         </Box>
       ) : (
         <Box>
-          <NavbarPersonalizada elevation={0} position="fixed">
+          <NavbarPersonalizada
+            elevation={0}
+            position="fixed"
+            sx={{ marginRight: 10 ,marginLeft:10  }}
+          >
             <Toolbar>
               <Box sx={{ flexDirection: "row", display: "flex" }}>
                 <IconButton sx={{ color: "white" }}>
@@ -218,14 +221,25 @@ export default function Navbar(props) {
                   </Link>
                 </Button>
               </Box>
-              <Switch onChange={handleMode} color="primary" />
               {account == null ? (
                 <Button
                   disableElevation
-                  sx={{ color: "white" }}
+                  sx={{
+                    color: "orange",
+                    marginLeft: 4,
+                    border: 2,
+                    borderRadius: 6,
+                  }}
                   onClick={initConnection}
                 >
-                  <Typography fontSize={16}>Log-in</Typography>
+                  <img
+                    sx={{ marginLeft: 2 }}
+                    src={imageButton}
+                    alt="my"
+                    width={"20px"}
+                  />
+
+                  <Typography sx={{ margin: 0.5 }}>Connect Metamask</Typography>
                 </Button>
               ) : (
                 <>
@@ -247,6 +261,6 @@ export default function Navbar(props) {
           <Offset />
         </Box>
       )}
-    </ThemeProvider>
+    </>
   );
 }

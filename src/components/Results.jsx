@@ -1,12 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Refresh, Add, Remove } from "@mui/icons-material";
-import {BotonPersonalizado,themeDark,themeLight} from "./Themes"
-import { styled,CssBaseline } from "@mui/material";
+import { BotonPersonalizado, themeDark, themeLight } from "./Themes";
+import { styled, CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { ethers } from "ethers";
 import abi from "../abi/abiLottery.json";
+import abiP from "../abi/AbiP.json";
+
 import {
   Button,
   Typography,
@@ -18,13 +20,14 @@ import {
   CardContent,
   CardActions,
   IconButton,
+  TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 const TypographyPer = styled(Typography)({
   color: "white",
 });
 export default function Results(props) {
-  const { account, provider,DarkMode } = props;
+  const { account, provider, DarkMode } = props;
   const [lastGameId, setLastGameId] = useState(parseInt(0));
   const [active, setActive] = useState(false);
   const [buttonState, setButtonState] = useState("loaded");
@@ -37,6 +40,7 @@ export default function Results(props) {
   const [error, setError] = useState("succesfull");
   const [open, setOpen] = useState(false);
   const [Success, setSuccess] = useState(false);
+  const [textfield, setTextfield] = useState(null);
 
   const getInfoContract = async () => {
     setButtonState("loading");
@@ -47,11 +51,19 @@ export default function Results(props) {
       abi,
       provider
     );
+    const contractP = new ethers.Contract(
+      "0xC5Ab7a942f7d1a809CB756C0f92870f9e8546afa",
+      abiP,
+      provider
+    );
+    var InfoLoteriaP;
+    const temInfoLoteriaP = await contractP._ActualLottery  .TicketOwner(1);
+    console.log("\n" + temInfoLoteriaP.TicketOwner);
+
     var pool = [0];
     var nwinners = [0];
     var winner = [[]];
     var fwinner = [[]];
-
 
     const temActive = await contract.active();
     console.log(temActive.toString());
@@ -60,8 +72,8 @@ export default function Results(props) {
     const temIdGame = await contract.idGame();
     console.log(temIdGame.toString());
 
-    let temlastGameId = temActive ? (temIdGame -1): temIdGame;
-    console.log("LastGameID"+temlastGameId.toString());
+    let temlastGameId = temActive ? temIdGame - 1 : temIdGame;
+    console.log("LastGameID" + temlastGameId.toString());
     setLastGameId(temlastGameId.toString());
 
     if (temlastGameId >= 1) {
@@ -87,7 +99,6 @@ export default function Results(props) {
         }
         winner.push(winners);
         fwinner.push(fwinners);
-
       }
       setPool(pool);
       setNwinners(nwinners);
@@ -106,10 +117,8 @@ export default function Results(props) {
     );
 
     try {
-      console.log("id:"+id);
-      console.log("wallet:"+account);
-      
-
+      console.log("id:" + id);
+      console.log("wallet:" + account);
 
       await contract.withdrawByWinner(parseInt(id));
       setSuccess(true);
@@ -120,6 +129,116 @@ export default function Results(props) {
       return e.reason;
     }
   }
+  const ShowEspcificResult = async (id) => {
+    setButtonState("loading");
+    const tempSigner = provider.getSigner();
+    setSigner(tempSigner);
+    const contract = new ethers.Contract(
+      "0x4e4f221A11708bB6b9DF9b08a8d5fb2FBeE5f844",
+      abi,
+      provider
+    );
+
+    var pool;
+    var nwinners;
+    var winner = [];
+    var fwinner = [];
+    if (
+      (id > 0 && id < lastGameId && active) ||
+      (id == lastGameId && !active)
+    ) {
+      const temNwinners = await contract.Nwinners(id);
+      console.log(temNwinners.toString());
+      nwinners = temNwinners;
+
+      const temPool = (await contract.pool(id)) / Aeth;
+      console.log(temPool.toString());
+      pool = "Prize:" + (temPool * 0.8).toFixed(2);
+      console.log(pool);
+
+      for (var j = 0; j < temNwinners; j++) {
+        const temWinners = await contract.winners(id, j);
+        console.log(id + "serie" + " " + j + "º position: " + temWinners);
+        winner.push(temWinners);
+        const temIfWinners = (await contract.WithdrawWinners(id, j)) == true;
+        console.log(id + "serie" + " " + j + "ha withdraw: " + temIfWinners);
+        fwinner.push(temIfWinners);
+      }
+      setButtonState("loaded");
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            background: "FEFFF0",
+          }}
+        >
+          <Card
+            raised
+            sx={{
+              minHeight: 300,
+              minWidth: 300,
+              p: 2,
+              background: "rgba(0,0,0,0.0)",
+              border: 4,
+              color: "white",
+              marginTop: 3,
+            }}
+            elevation={0}
+          >
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+            >
+              <Grid item>
+                <Typography color="primary" variant="h3">
+                  {Pool[1]}
+                </Typography>
+                <Typography color="primary" variant="h5">
+                  Id:{lastGameId}
+                </Typography>
+              </Grid>
+              {Winners[1].map((winner) => (
+                <Grid item>
+                  <Typography color="primary">
+                    {Winners[1].indexOf(winner) + 1}º Position: ...
+                    {winner.substring(winner.length - 7)}
+                  </Typography>
+                  {winner.toUpperCase() == account.toUpperCase() ? (
+                    <>
+                      {ifWinners[1][Winners[1].indexOf(winner)] != true ? (
+                        <BotonPersonalizado
+                          onClick={() => Withdraw(lastGameId)}
+                          sx={{ marginTop: 2, border: 3 }}
+                        >
+                          <TypographyPer>Congrats you Won</TypographyPer>
+                        </BotonPersonalizado>
+                      ) : (
+                        <BotonPersonalizado
+                          disabled
+                          sx={{ marginTop: 4, border: 3 }}
+                        >
+                          <TypographyPer>
+                            You already withdraw the prize
+                          </TypographyPer>
+                        </BotonPersonalizado>
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </Grid>
+              ))}
+            </Grid>
+          </Card>
+        </Box>
+      );
+    }
+  };
+
   function ShowResults() {
     return (
       <>
@@ -130,9 +249,10 @@ export default function Results(props) {
               width: "50%",
               minHeight: 400,
               display: "flex",
-              background: "rgba(0,0,0,0.0)",border: 4,
+              background: "rgba(0,0,0,0.0)",
+              border: 4,
               color: "white",
-              marginTop: 3
+              marginTop: 3,
             }}
             elevation={0}
           >
@@ -169,9 +289,15 @@ export default function Results(props) {
               >
                 <Card
                   raised
-                  sx={{ minHeight: 300,minWidth:300, p: 2, background: "rgba(0,0,0,0.0)",border: 4,
-                  color: "white",
-                  marginTop: 3, }}
+                  sx={{
+                    minHeight: 300,
+                    minWidth: 300,
+                    p: 2,
+                    background: "rgba(0,0,0,0.0)",
+                    border: 4,
+                    color: "white",
+                    marginTop: 3,
+                  }}
                   elevation={0}
                 >
                   <Grid
@@ -182,7 +308,7 @@ export default function Results(props) {
                     spacing={2}
                   >
                     <Grid item>
-                      <Typography color="primary"variant="h3">
+                      <Typography color="primary" variant="h3">
                         {Pool[1]}
                       </Typography>
                       <Typography color="primary" variant="h5">
@@ -192,14 +318,13 @@ export default function Results(props) {
                     {Winners[1].map((winner) => (
                       <Grid item>
                         <Typography color="primary">
-                          {Winners[1].indexOf(winner) + 1}º Position:
-                          ...{winner.substring(winner.length - 7)}
+                          {Winners[1].indexOf(winner) + 1}º Position: ...
+                          {winner.substring(winner.length - 7)}
                         </Typography>
                         {winner.toUpperCase() == account.toUpperCase() ? (
                           <>
-                            {ifWinners[1][
-                              Winners[1].indexOf(winner)
-                            ] != true ? (
+                            {ifWinners[1][Winners[1].indexOf(winner)] !=
+                            true ? (
                               <BotonPersonalizado
                                 onClick={() => Withdraw(lastGameId)}
                                 sx={{ marginTop: 2, border: 3 }}
@@ -248,10 +373,12 @@ export default function Results(props) {
                         sx={{
                           p: 2,
                           minHeight: 200,
-                          background: "rgba(0,0,0,0.0)",minWidth:300,minHeight:300,
+                          background: "rgba(0,0,0,0.0)",
+                          minWidth: 300,
+                          minHeight: 300,
                           border: 4,
-              color: "white",
-              marginTop: 3,
+                          color: "white",
+                          marginTop: 3,
                         }}
                         elevation={0}
                       >
@@ -267,21 +394,19 @@ export default function Results(props) {
                               {Pool[2]}
                             </Typography>
                             <Typography color="primary" variant="h5">
-                        Id:{lastGameId-1}
-                      </Typography>
+                              Id:{lastGameId - 1}
+                            </Typography>
                           </Grid>
                           {Winners[2].map((winner) => (
                             <Grid item>
                               <Typography color="primary">
-                                {Winners[2].indexOf(winner) + 1}º
-                                Position: ...
+                                {Winners[2].indexOf(winner) + 1}º Position: ...
                                 {winner.substring(winner.length - 7)}
                               </Typography>
                               {winner.toUpperCase() == account.toUpperCase() ? (
                                 <>
-                                  {ifWinners[2][
-                                    Winners[2].indexOf(winner)
-                                  ] != true ? (
+                                  {ifWinners[2][Winners[2].indexOf(winner)] !=
+                                  true ? (
                                     <Button
                                       onClick={() => Withdraw(lastGameId - 1)}
                                       sx={{ marginLeft: 4, border: 3 }}
@@ -321,9 +446,15 @@ export default function Results(props) {
                       >
                         <Card
                           raised
-                          sx={{ p: 2,minHeight:300, minWidth:300,background: "rgba(0,0,0,0.0)" ,border: 4,
-                          color: "white",
-                          marginTop: 3,}}
+                          sx={{
+                            p: 2,
+                            minHeight: 300,
+                            minWidth: 300,
+                            background: "rgba(0,0,0,0.0)",
+                            border: 4,
+                            color: "white",
+                            marginTop: 3,
+                          }}
                           elevation={0}
                         >
                           <Grid
@@ -338,24 +469,23 @@ export default function Results(props) {
                                 {Pool[3]}
                               </Typography>
                               <Typography color="primary" variant="h5">
-                                Id: {(parseInt(lastGameId-2))}
-                      </Typography>
+                                Id: {parseInt(lastGameId - 2)}
+                              </Typography>
                             </Grid>
                             {Winners[3].map((winner) => (
                               <Grid item>
                                 <Typography color="primary">
-                                  {Winners[3].indexOf(winner) + 1}º
-                                  Position: ...
+                                  {Winners[3].indexOf(winner) + 1}º Position:
+                                  ...
                                   {winner.substring(winner.length - 7)}
                                 </Typography>
                                 {winner.toUpperCase() ==
                                 account.toUpperCase() ? (
                                   <>
-                                    {ifWinners[3][
-                                      Winners[3].indexOf(winner)
-                                    ] != true ? (
+                                    {ifWinners[3][Winners[3].indexOf(winner)] !=
+                                    true ? (
                                       <BotonPersonalizado
-                                        onClick={() => Withdraw(lastGameId-2)}
+                                        onClick={() => Withdraw(lastGameId - 2)}
                                         sx={{ marginLeft: 4, border: 3 }}
                                       >
                                         <TypographyPer>
@@ -395,6 +525,7 @@ export default function Results(props) {
       </>
     );
   }
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -411,62 +542,74 @@ export default function Results(props) {
   };
 
   return (
-    <ThemeProvider theme={DarkMode? themeLight:themeDark}>
-    <CssBaseline />  
+    <ThemeProvider theme={DarkMode ? themeLight : themeDark}>
+      <CssBaseline />
 
-    <Box
-      sx={{
-        pb: 10,
-        pt: 3,
-      }}
-    >
-      {open ? (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="warning"
-            sx={{ width: "100%" }}
-          >
-            {error}
-          </Alert>
-        </Snackbar>
-      ) : (
-        <></>
-      )}
-      {Success ? (
-        <Snackbar
-          open={Success}
-          autoHideDuration={6000}
-          onClose={handleCloseSuccess}
-        >
-          <Alert
-            onClose={handleCloseSuccess}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Success!!
-          </Alert>
-        </Snackbar>
-      ) : (
-        <></>
-      )}
-      <Typography color="primary"variant="h1">Results</Typography>
-      <Button
-        sx={{ color: "white", marginLeft: 4, border: 3 }}
-        onClick={getInfoContract}
-        disabled={buttonState === "loading"}
+      <Box
+        sx={{
+          pb: 10,
+          pt: 3,
+        }}
       >
-        <Refresh />
-        {buttonState === "loaded" ? "Refresh" : "Fetching..."}
-      </Button>
-      {buttonState === "loaded" ? (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {ShowResults()}
-        </Box>
-      ) : (
-        <></>
-      )}
-    </Box>
+        {open ? (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="warning"
+              sx={{ width: "100%" }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
+        ) : (
+          <></>
+        )}
+        {Success ? (
+          <Snackbar
+            open={Success}
+            autoHideDuration={6000}
+            onClose={handleCloseSuccess}
+          >
+            <Alert
+              onClose={handleCloseSuccess}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              Success!!
+            </Alert>
+          </Snackbar>
+        ) : (
+          <></>
+        )}
+        <Typography color="primary" variant="h1">
+          Results
+        </Typography>
+
+        <Button
+          sx={{ color: "white", marginLeft: 4, border: 3 }}
+          onClick={getInfoContract}
+          disabled={buttonState === "loading"}
+        >
+          <Refresh />
+          {buttonState === "loaded" ? "Refresh" : "Fetching..."}
+        </Button>
+        <TextField
+          value={textfield}
+          label="Enter the Id"
+          onChange={(e) => {
+            setTextfield(e.target.value);
+          }}
+          size="small"
+          color="primary"
+        />
+        {buttonState === "loaded" ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            {ShowResults()}
+          </Box>
+        ) : (
+          <></>
+        )}
+      </Box>
     </ThemeProvider>
   );
 }
