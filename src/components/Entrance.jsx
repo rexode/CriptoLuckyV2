@@ -1,10 +1,10 @@
-import { Paper, Typography,Button } from "@mui/material";
+import { Paper, Typography,Button,Grid,CardMedia,Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { styled,CssBaseline } from "@mui/material";
-import imageBackground from "../assets/paisaje.jpg"
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {BotonPersonalizado,themeDark,themeLight} from "./Themes"
+import {theme} from "./Themes"
+import ImageEntrance from "../assets/ImageEntrance.png";
 
 
 
@@ -15,7 +15,7 @@ export default function Entrance(props){
   const {DarkMode} = props;
 
 return (
-<ThemeProvider theme={DarkMode? themeLight:themeDark}>
+<ThemeProvider theme={theme}>
 <CssBaseline />  
     <Paper
     elevation={0}
@@ -29,34 +29,35 @@ return (
     square
   >
 
-    <Box>
-      <Typography variant="h1" color="primary">
-        Easy To
-      </Typography>
-      <Typography variant="h1" color="primary">
-        Win
-      </Typography>
-      <Typography variant="h3" color="primary">
-        3 Simple steps
-      </Typography>
-      <Typography variant="h4" color="primary">
-        1º Connect your wallet
-      </Typography>
-      <Typography variant="h4" color="primary">
-        2º Buy the Tickets
-        <Button >
-          To Lottery
-        </Button>
-      </Typography>
-      <Typography variant="h4" color="primary">
-        3º Wait for the results
-        <Button >
-          To Results
-        </Button>
-      </Typography>
-      <Typography variant="h1"color="primary">Win</Typography>
-      <Typography variant="h1"color="primary">Win</Typography>
-    </Box>
+<Box >
+        <Grid
+          container
+          spacing={2}
+          sx={{ p: 5 }}
+          direction="row"
+          alignItems="center"
+        >
+          
+          <Grid item xs={12} md={6} >
+            <Box sx={{ p: 4,alignItems:"left" }}>
+              <Stack spacing={2}>
+                <Stack Item  sx={{borderRadius:10,backgroundColor: "#1A171B",mb:3,width:300,justifyContent: 'center' }} >
+                <Typography sx={{color: "#FB6BFF",mt:1,mb:1}} variant="Stacks">WELCOME TO CRIPTOLUCKY</Typography></Stack>
+              </Stack>
+              <Box>
+              <Typography variant="Tittle" color="#FFCD00"  >
+                <b>Lottery world more than your imagination</b>
+              </Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6} alignItems="center">
+            <CardMedia justify="center" >
+              <img src={ImageEntrance} alt="Logo"style={{ width: 700, height: 700 }}  />
+            </CardMedia>
+          </Grid>
+        </Grid>
+      </Box>
   </Paper>
   </ThemeProvider >
 

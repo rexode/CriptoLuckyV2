@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { styled, createTheme, CssBaseline } from "@mui/material";
 import imageButton from "../assets/metamask.png";
+import Logo from "../assets/LogoSinfondo.png";
 
 import {
   Celebration,
@@ -174,20 +175,16 @@ export default function Navbar(props) {
           <NavbarPersonalizada
             elevation={0}
             position="fixed"
-            sx={{ marginRight: 10 ,marginLeft:10  }}
+            sx={{ pl: 40 ,pr:10  }}
           >
             <Toolbar>
               <Box sx={{ flexDirection: "row", display: "flex" }}>
-                <IconButton sx={{ color: "white" }}>
-                  <Celebration />
-                </IconButton>
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{ marginRight: 4 }}
-                >
-                  CriptoLucky
-                </Typography>
+              <img
+                    sx={{ marginLeft: 2 }}
+                    src={Logo}
+                    alt="my"
+                    width={"120px"}
+                  />
               </Box>
               <Box
                 sx={{

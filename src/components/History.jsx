@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import {Celebration} from "@mui/icons-material";
 import { Typography,Card, Grid, CardMedia } from "@mui/material";
-import logo from "../assets/logo.jpg"
+import logo from "../assets/Logo.jpg"
 import {BotonPersonalizado,themeDark,themeLight} from "./Themes"
 import { styled,CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

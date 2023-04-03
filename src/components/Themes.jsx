@@ -4,6 +4,25 @@ import { Box } from "@mui/system";
 import React from "react";
 import { styled } from "@mui/material";
 
+export const theme = createTheme({
+    typography: {
+      Stacks:{
+        fontWeight:400,
+        letterSpacing:"0.120em"
+
+
+      },
+      Tittle:{
+        fontWeight:10000,
+        letterSpacing:"0.120em",
+        fontSize:"5em",
+
+
+      },
+      
+    }});
+
+
     export const themeDark = createTheme({
       palette: {
         primary: {

@@ -82,6 +82,7 @@ export default function App() {
         className="App"
         style={{ backgroundImage: `url(${imageBackground})` }}
       >
+        <Box sx={{pl: 30 ,pr:30}}>
         <Navbar
         
           initConnection={initConnection}
@@ -101,5 +102,7 @@ export default function App() {
         <Results account={account} provider={provider} DarkMode={DarkMode} />
         <Footer DarkMode={DarkMode} />
       </Box>
+      </Box>
+
   );
 }
