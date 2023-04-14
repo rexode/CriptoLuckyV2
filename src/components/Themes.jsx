@@ -13,9 +13,8 @@ export const theme = createTheme({
 
       },
       Tittle:{
-        fontWeight:10000,
         letterSpacing:"0.120em",
-        fontSize:"5em",
+        fontSize:"3.5em",
 
 
       },
